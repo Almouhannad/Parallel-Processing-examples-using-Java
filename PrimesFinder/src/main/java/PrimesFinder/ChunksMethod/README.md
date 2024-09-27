@@ -15,7 +15,11 @@
 | 256     | 53ms         |
 | 512     | 111ms        |
 | 1024    | 205ms        |
+
+
 ![Performance Graph](images/N_100.png)
+
+
 ## N = 1000
 
 | Threads | Average Time |
@@ -31,7 +35,11 @@
 | 256     | 50ms         |
 | 512     | 103ms        |
 | 1024    | 206ms        |
+
+
 ![Performance Graph](images/N_1000.png)
+
+
 ## N = 10000
 
 | Threads | Average Time |
@@ -47,7 +55,11 @@
 | 256     | 48ms         |
 | 512     | 101ms        |
 | 1024    | 208ms        |
+
+
 ![Performance Graph](images/N_10000.png)
+
+
 ## N = 100000
 
 | Threads | Average Time |
@@ -63,7 +75,11 @@
 | 256     | 54ms         |
 | 512     | 107ms        |
 | 1024    | 212ms        |
+
+
 ![Performance Graph](images/N_100000.png)
+
+
 ## N = 1000000
 
 | Threads | Average Time |
@@ -79,4 +95,7 @@
 | 256     | 169ms        |
 | 512     | 214ms        |
 | 1024    | 329ms        |
+
+
 ![Performance Graph](images/N_1000000.png)
+
