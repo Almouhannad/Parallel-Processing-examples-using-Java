@@ -16,9 +16,7 @@
 | 512     | 111ms        |
 | 1024    | 205ms        |
 
-
 ![Performance Graph](images/N_100.png)
-
 
 ## N = 1000
 
@@ -36,9 +34,7 @@
 | 512     | 103ms        |
 | 1024    | 206ms        |
 
-
 ![Performance Graph](images/N_1000.png)
-
 
 ## N = 10000
 
@@ -56,9 +52,7 @@
 | 512     | 101ms        |
 | 1024    | 208ms        |
 
-
 ![Performance Graph](images/N_10000.png)
-
 
 ## N = 100000
 
@@ -76,9 +70,7 @@
 | 512     | 107ms        |
 | 1024    | 212ms        |
 
-
 ![Performance Graph](images/N_100000.png)
-
 
 ## N = 1000000
 
@@ -96,6 +88,40 @@
 | 512     | 214ms        |
 | 1024    | 329ms        |
 
-
 ![Performance Graph](images/N_1000000.png)
 
+## N = 10000000
+
+| Threads | Average Time |
+|---------|--------------|
+| 2       | 6274ms       |
+| 4       | 4161ms       |
+| 8       | 3763ms       |
+| 16      | 3681ms       |
+| 32      | 3928ms       |
+| 64      | 4118ms       |
+| 128     | 3808ms       |
+| 256     | 3701ms       |
+| 512     | 3904ms       |
+| 1024    | 3968ms       |
+| 2048    | 4089ms       |
+
+![Performance Graph](images/N_10000000.png)
+
+## N = 100000000
+
+| Threads | Average Time |
+|---------|--------------|
+| 2       | 153293ms     |
+| 4       | 109023ms     |
+| 8       | 100458ms     |
+| 16      | 98965ms      |
+| 32      | 98571ms      |
+| 64      | 98067ms      |
+| 128     | 96586ms      |
+| 256     | 96672ms      |
+| 512     | 96907ms      |
+| 1024    | 96808ms      |
+| 2048    | 97943ms      |
+
+![Performance Graph](images/N_100000000.png)
