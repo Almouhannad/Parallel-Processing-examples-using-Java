@@ -25,9 +25,9 @@ public class TestChunksMethod extends TestCase {
         }
     }
 
-    public void testChunksMethodPerformance() {
+    public void testChunksMethodPerformanceOnSmallN() {
         int[] nValues = {100, 1000, 10000, 100000, 1000000};
-        int[] threadCounts = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024};
+        int[] threadCounts = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
         int numRuns = 10;
 
         for (int n : nValues) {
@@ -50,20 +50,51 @@ public class TestChunksMethod extends TestCase {
         }
     }
 
-    public void testChunksMethodPerformanceOnLargeN() {
-        int[] nValues = {10000000, 100000000};
-        int[] threadCounts = {2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
+    public void testChunksMethodPerformanceOn1e7() {
+        int[] nValues = {10000000};
+        int[] threadCounts = {2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384};
+        int numRuns = 5;
 
         for (int n : nValues) {
             System.out.println("N = " + n);
             for (int threads : threadCounts) {
                 System.out.println("  Threads: " + threads);
-                IPrimesFinder finder = new ChunksMethod(n, threads);
-                long start = System.currentTimeMillis();
-                finder.getPrimesCount();
-                long end = System.currentTimeMillis();
-                long totalTime = end-start;
-                System.out.println("  Time: " + totalTime + "ms");
+                long totalTime = 0;
+                for (int i = 0; i < numRuns; i++) {
+                    IPrimesFinder finder = new ChunksMethod(n, threads);
+                    long start = System.currentTimeMillis();
+                    finder.getPrimesCount();
+                    long end = System.currentTimeMillis();
+                    long time = (end - start);
+                    totalTime += time;
+                }
+                long averageTime = totalTime / numRuns;
+                System.out.println("  Average Time: " + averageTime + "ms");
+            }
+            System.out.println();
+        }
+    }
+
+    public void testChunksMethodPerformanceOn1e8() {
+        int[] nValues = {100000000};
+        int[] threadCounts = {2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384};
+        int numRuns = 3;
+
+        for (int n : nValues) {
+            System.out.println("N = " + n);
+            for (int threads : threadCounts) {
+                System.out.println("  Threads: " + threads);
+                long totalTime = 0;
+                for (int i = 0; i < numRuns; i++) {
+                    IPrimesFinder finder = new ChunksMethod(n, threads);
+                    long start = System.currentTimeMillis();
+                    finder.getPrimesCount();
+                    long end = System.currentTimeMillis();
+                    long time = (end - start);
+                    totalTime += time;
+                }
+                long averageTime = totalTime / numRuns;
+                System.out.println("  Average Time: " + averageTime + "ms");
             }
             System.out.println();
         }
