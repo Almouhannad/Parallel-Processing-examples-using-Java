@@ -99,4 +99,35 @@ public class TestChunksMethod extends TestCase {
             System.out.println();
         }
     }
+
+    public void testChunksMethodPerformanceOn1e8With1024Threads() {
+        try {
+            // Wait some time to connect using JConsole
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        int[] nValues = {100000000};
+        int[] threadCounts = {1024};
+        int numRuns = 1;
+
+        for (int n : nValues) {
+            System.out.println("N = " + n);
+            for (int threads : threadCounts) {
+                System.out.println("  Threads: " + threads);
+                long totalTime = 0;
+                for (int i = 0; i < numRuns; i++) {
+                    IPrimesFinder finder = new ChunksMethod(n, threads);
+                    long start = System.currentTimeMillis();
+                    finder.getPrimesCount();
+                    long end = System.currentTimeMillis();
+                    long time = (end - start);
+                    totalTime += time;
+                }
+                long averageTime = totalTime / numRuns;
+                System.out.println("  Average Time: " + averageTime + "ms");
+            }
+            System.out.println();
+        }
+    }
 }
