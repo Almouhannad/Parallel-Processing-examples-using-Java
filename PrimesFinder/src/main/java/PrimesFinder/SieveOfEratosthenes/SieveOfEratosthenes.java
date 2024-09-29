@@ -3,6 +3,7 @@ package PrimesFinder.SieveOfEratosthenes;
 import PrimesFinder.Abstractions.IPrimesFinder;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 public class SieveOfEratosthenes implements IPrimesFinder {
@@ -33,9 +34,9 @@ public class SieveOfEratosthenes implements IPrimesFinder {
      * Fill "Primes" list with primes in [2,n]
      */
     private void findPrimes() {
-        boolean[] isPrime = new boolean[n + 1];
+        BitSet isPrime = new BitSet(n + 10);
         for (int i = 2; i <= n; i++) {
-            isPrime[i] = true;
+            isPrime.set(i);
         }
 
         Thread[] threads = new Thread[threadsCount];
@@ -61,7 +62,7 @@ public class SieveOfEratosthenes implements IPrimesFinder {
 
         // add primes to the list
         for (int i = 2; i <= n; i++) {
-            if (isPrime[i]) {
+            if (isPrime.get(i)) {
                 primes.add(i);
             }
         }
