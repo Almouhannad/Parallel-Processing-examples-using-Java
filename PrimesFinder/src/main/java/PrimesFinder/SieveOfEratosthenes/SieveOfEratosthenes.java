@@ -3,68 +3,60 @@ package PrimesFinder.SieveOfEratosthenes;
 import PrimesFinder.Abstractions.IPrimesFinder;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 public class SieveOfEratosthenes implements IPrimesFinder {
-    private int n;
-    private int threadsCount;
-    public List<Integer> primes;
+
+    private final int n;
+    private final int threadsCount;
+    private final List<Integer> primes;
 
     /**
-     * @param n            to find primes in [2,n]
-     * @param threadsCount number of threads to use
+     * @param n find primes in [2,n]
+     * @param threadsCount threads to use
      */
     public SieveOfEratosthenes(int n, int threadsCount) {
         this.n = n;
         this.threadsCount = threadsCount;
-        this.primes = new ArrayList<>();
+        primes = new ArrayList<>();
     }
 
-    /**
-     * @return the count of prime numbers found
-     */
     @Override
     public int getPrimesCount() {
-        findPrimes();
-        return primes.size();
-    }
-
-    /**
-     * Fill "Primes" list with primes in [2,n]
-     */
-    private void findPrimes() {
-        BitSet isPrime = new BitSet(n + 10);
+        boolean[] isPrime = new boolean[n + 10];
         for (int i = 2; i <= n; i++) {
-            isPrime.set(i);
+            isPrime[i] = true;
         }
 
         Thread[] threads = new Thread[threadsCount];
-        int chunkSize = (n - 1) / threadsCount;
-
-        // create and start each thread
+        // Range for each thread
+        int range = (n - 1) / threadsCount;
         for (int i = 0; i < threadsCount; i++) {
-            int start = i * chunkSize + 2;
-            int end = (i == threadsCount - 1) ? n : start + chunkSize + 1;
-            SieveOfEratosthenesRunnable task = new SieveOfEratosthenesRunnable(start, end, isPrime);
-            threads[i] = new Thread(task);
+            // start and end for each thread
+            int start = i * range + 2;
+            int end = (i == threadsCount - 1) ? n : (start + range - 1);
+            // Create a new thread
+            threads[i] = new Thread(new SieveOfEratosthenesRunnable(isPrime, start, end));
+            // Start the thread
             threads[i].start();
         }
 
-        // wait for all threads to finish
-        for (Thread thread : threads) {
+        // Wait for all threads to finish
+        for (int i = 0; i < threadsCount; i++) {
             try {
-                thread.join();
+                threads[i].join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
 
-        // add primes to the list
+        // Store primes
         for (int i = 2; i <= n; i++) {
-            if (isPrime.get(i)) {
+            if (isPrime[i]) {
                 primes.add(i);
             }
         }
+
+        return primes.size();
     }
 }

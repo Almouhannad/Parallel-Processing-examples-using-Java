@@ -1,39 +1,34 @@
 package PrimesFinder.SieveOfEratosthenes;
 
-import java.util.BitSet;
-
 public class SieveOfEratosthenesRunnable implements Runnable {
-    private int start;
-    private int end;
-    private BitSet isPrime;
+
+    private final boolean[] isPrime;
+
+    // thread is finding primes in [left, right]
+    private final int left;
+    private final int right;
 
     /**
-     * @param start   left side of range
-     * @param end     right side of range
-     * @param isPrime isPrime array in main task
+     * @param isPrime isPrime in parent process
+     * @param left    start index
+     * @param right   end index
      */
-    public SieveOfEratosthenesRunnable(int start, int end, BitSet isPrime) {
-        this.start = start;
-        this.end = end;
+    public SieveOfEratosthenesRunnable(boolean[] isPrime, int left, int right) {
         this.isPrime = isPrime;
+        this.left = left;
+        this.right = right;
     }
 
     @Override
     public void run() {
-//        System.out.println("St: " + start);
-//        System.out.println("En: " + end);
-//        System.out.println("Thread start");
-        for (int i = start; i * i <= end; i++) {
-            if (isPrime.get(i)) {
-                for (int j = i * i; j <= end; j += i) {
-                    if (j < 0)
-                        continue;
-                    synchronized (isPrime) {
-                        isPrime.clear(j);
-                    }
+        for (int i = 2; i * i <= isPrime.length - 1; i++) {
+            if (isPrime[i]) {
+                // starting index for marking multiples of i not prime
+                int j0 = Math.max(i * i, (left + i - 1) / i * i);
+                for (int j = j0; j <= right; j += i) {
+                    isPrime[j] = false;
                 }
             }
         }
-//        System.out.println("Thread end");
     }
 }
