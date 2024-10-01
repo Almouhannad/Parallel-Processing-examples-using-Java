@@ -2,40 +2,40 @@ package SlicesMethod;
 
 import Helpers.ImageProcessingHelper;
 
-import java.awt.image.BufferedImage;
-
 public class SlicesImageRecolorMethodRunnable implements Runnable {
 
     private SlicesImageRecolorMethod parentProcess;
-    private int index;
 
-    public SlicesImageRecolorMethodRunnable(SlicesImageRecolorMethod parentProcess, int index) {
+    // Start and end values of height
+    private int startY;
+    private int endY;
+
+
+    /**
+     * @param parentProcess the parent process that created this runnable
+     * @param startY        the starting y-coordinate of the slice to be recolored
+     * @param endY          the ending y-coordinate of the slice to be recolored
+     */
+    public SlicesImageRecolorMethodRunnable(SlicesImageRecolorMethod parentProcess, int startY, int endY) {
         this.parentProcess = parentProcess;
-        this.index = index;
+        this.startY = startY;
+        this.endY = endY;
     }
 
     @Override
     public void run() {
-        int xOrigin = 0;
-        int yOrigin = parentProcess.height * index;
-
-        recolor(
-                parentProcess.originalImage,
-                parentProcess.resultImage,
-                xOrigin,
-                yOrigin,
-                parentProcess.width,
-                parentProcess.height
-        );
+//        System.out.println("Thread: " + index + " started");
+        recolor();
+//        System.out.println("Thread: " + index + " finished");
     }
 
-    private void recolor(BufferedImage originalImage,
-                         BufferedImage resultImage,
-                         int leftCorner, int topCorner,
-                         int width, int height) {
-        for (int x = leftCorner; x < leftCorner + width && x < originalImage.getWidth(); x++) {
-            for (int y = topCorner; y < topCorner + height && y < originalImage.getHeight(); y++) {
-                ImageProcessingHelper.recolorPixel(originalImage, resultImage, x, y);
+    /**
+     * Recolors the slice of the image from (0,startY) to (width, endY)
+     */
+    private void recolor() {
+        for (int x = 0; x < parentProcess.width; x++) {
+            for (int y = startY; y < endY && y < parentProcess.originalImage.getHeight(); y++) {
+                ImageProcessingHelper.recolorPixel(parentProcess.originalImage, parentProcess.resultImage, x, y);
             }
         }
     }
