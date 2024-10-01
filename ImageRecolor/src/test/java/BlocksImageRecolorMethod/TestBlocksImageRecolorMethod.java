@@ -40,4 +40,29 @@ public class TestBlocksImageRecolorMethod extends TestCase {
 
         Assert.assertTrue(ImageProcessingHelper.areImagesEqual(expectedImage, generatedImage));
     }
+
+    public void testBlocksImageRecolorMethodPerformance() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        int[] threadCounts = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
+        int numRuns = 10;
+
+        for (int threads : threadCounts) {
+            System.out.println("Threads: " + threads);
+            long totalTime = 0;
+            for (int i = 0; i < numRuns; i++) {
+                IImageRecolorMethod method = new BlocksImageRecolorMethod(threads);
+                long start = System.currentTimeMillis();
+                method.recolorImage();
+                long end = System.currentTimeMillis();
+                long time = (end - start);
+                totalTime += time;
+            }
+            long averageTime = totalTime / numRuns;
+            System.out.println("  Average Time: " + averageTime + "ms");
+        }
+    }
 }
