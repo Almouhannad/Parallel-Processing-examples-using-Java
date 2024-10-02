@@ -1,5 +1,5 @@
 # Performance Results
-=======================
+# Sieve of Eratosthenes method
 
 ## N = 100
 
@@ -22,7 +22,7 @@
 
 ![Performance Graph](images/N_100.png)
 
-## N = 1000
+## N = 1,000
 
 | Threads | Average Time |
 |---------|--------------|
@@ -43,7 +43,7 @@
 
 ![Performance Graph](images/N_1000.png)
 
-## N = 10000
+## N = 1,0000
 
 | Threads | Average Time |
 |---------|--------------|
@@ -64,7 +64,7 @@
 
 ![Performance Graph](images/N_10000.png)
 
-## N = 100000
+## N = 100,000
 
 | Threads | Average Time |
 |---------|--------------|
@@ -85,7 +85,7 @@
 
 ![Performance Graph](images/N_100000.png)
 
-## N = 1000000
+## N = 1,000,000
 
 | Threads | Average Time |
 |---------|--------------|
@@ -106,7 +106,7 @@
 
 ![Performance Graph](images/N_1000000.png)
 
-## N = 10000000
+## N = 10,000,000
 
 | Threads | Average Time |
 |---------|--------------|
@@ -127,7 +127,7 @@
 
 ![Performance Graph](images/N_10000000.png)
 
-## N = 100000000
+## N = 100,000,000
 
 | Threads | Average Time |
 |---------|--------------|
@@ -148,7 +148,7 @@
 
 ![Performance Graph](images/N_100000000.png)
 
-## N = 1000000000
+## N = 1,000,000,000
 
 | Threads | Average Time |
 |---------|--------------|
