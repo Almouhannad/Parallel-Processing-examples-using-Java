@@ -59,19 +59,20 @@ public class TestChunksMethod extends TestCase {
         performanceTestHelper(nValues);
     }
 
-    public void testChunksMethodPerformanceOn1e8() {
+    public void testChunksMethodPerformanceOn1e8() throws InterruptedException {
+        Thread.sleep(10000);
         int[] nValues = {100000000};
         performanceTestHelper(nValues);
     }
 
-    public void testChunksMethodPerformanceOn1e8With1024Threads() throws InterruptedException {
+    public void testChunksMethodPerformanceOn1e8With32Threads() throws InterruptedException {
 
         // To connect with JConsole
         Thread.sleep(10000);
 
         int[] nValues = {100000000};
-        int[] threadCounts = {1024};
-        int numRuns = 1;
+        int[] threadCounts = {32};
+        int numRuns = 3;
 
         for (int n : nValues) {
             System.out.println("N = " + n);

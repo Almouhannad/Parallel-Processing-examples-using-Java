@@ -5,17 +5,15 @@ import PrimesFinder.Abstractions.IPrimesFinder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class uses chunks method to find primes in [2,n]
- */
 public class ChunksMethod implements IPrimesFinder {
-    private int n;
-    private int threadsCount;
-    public List<Integer> primes;
+
+    private final int n;
+    private final int threadsCount;
+    private final List<Integer> primes;
 
     /**
-     * @param n            to find primes in [2,n]
-     * @param threadsCount number of threads to use
+     * @param n            find primes in [2,n]
+     * @param threadsCount threads to use
      */
     public ChunksMethod(int n, int threadsCount) {
         this.n = n;
@@ -23,39 +21,55 @@ public class ChunksMethod implements IPrimesFinder {
         this.primes = new ArrayList<>();
     }
 
-    /**
-     * @return the count of prime numbers found
-     */
     @Override
     public int getPrimesCount() {
-        findPrimes();
+
+        Thread[] threads = new Thread[threadsCount];
+        // Range for each thread
+        int chunkSize = (n - 1) / threadsCount + 1;
+        for (int i = 0; i < threadsCount; i++) {
+            // start and end for each thread
+            int start = 2 + i * chunkSize;
+            int end = chunkSize * (i + 1) + 1;
+            end = Math.min(end, n);
+            // Create a new thread
+            threads[i] = new Thread(new ChunksMethodRunnable(start, end, primes));
+            // Start the thread
+            threads[i].start();
+        }
+
+        for (int i = 0; i < threadsCount; i++) {
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         return primes.size();
     }
 
     /**
-     * Fill "Primes" list with primes in [2,n]
+     * Check if number is prime (Enhanced method with low constant)
+     * in O(sqrt(number) / 6)
      */
-    private void findPrimes() {
-        Thread[] threads = new Thread[threadsCount];
-        int chunkSize = n / threadsCount;
-        // Same chunk size for each thread
-
-        // create and start each thread
-        for (int i = 0; i < threadsCount; i++) {
-            int start = i * chunkSize + 2;
-            int end = (i == threadsCount - 1) ? n : start + chunkSize - 1;
-            ChunksMethodRunnable task = new ChunksMethodRunnable(this, start, end);
-            threads[i] = new Thread(task);
-            threads[i].start();
+    public static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
         }
-
-        // wait for all threads to finish
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (number <= 3) {
+            return true;
+        }
+        if (number % 2 == 0 || number % 3 == 0) {
+            return false;
+        }
+        int sqrtN = (int) Math.sqrt(number);
+        for (int i = 5; i <= sqrtN; i += 6) {
+            if (number % i == 0 || number % (i + 2) == 0) {
+                return false;
             }
         }
+        return true;
     }
+
 }
