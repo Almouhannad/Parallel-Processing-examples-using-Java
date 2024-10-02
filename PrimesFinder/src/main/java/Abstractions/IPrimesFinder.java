@@ -1,4 +1,4 @@
-package PrimesFinder.Abstractions;
+package Abstractions;
 
 public interface IPrimesFinder {
     int getPrimesCount();

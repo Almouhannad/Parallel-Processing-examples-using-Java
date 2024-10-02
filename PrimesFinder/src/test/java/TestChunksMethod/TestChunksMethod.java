@@ -1,7 +1,7 @@
 package TestChunksMethod;
 
-import PrimesFinder.Abstractions.IPrimesFinder;
-import PrimesFinder.ChunksMethod.ChunksMethod;
+import Abstractions.IPrimesFinder;
+import ChunksMethod.ChunksMethod;
 import TestConstants.TestConstants;
 import junit.framework.TestCase;
 

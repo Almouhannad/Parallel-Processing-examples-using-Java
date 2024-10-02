@@ -1,7 +1,7 @@
 package TestSieveOfEratosthenes;
 
-import PrimesFinder.Abstractions.IPrimesFinder;
-import PrimesFinder.SieveOfEratosthenes.SieveOfEratosthenes;
+import Abstractions.IPrimesFinder;
+import SieveOfEratosthenes.SieveOfEratosthenes;
 
 import TestConstants.TestConstants;
 import junit.framework.TestCase;
@@ -45,9 +45,6 @@ public class TestSieveOfEratosthenes extends TestCase {
     }
 
     public void testSieveOfEratosthenesOutput() {
-
-        int[] expectedPrimeCounts = TestConstants.outputTestExpectedAnswers;
-        int[] nValues = TestConstants.outputTestNs;
 
         outputTestHelper(1);
         outputTestHelper(2);

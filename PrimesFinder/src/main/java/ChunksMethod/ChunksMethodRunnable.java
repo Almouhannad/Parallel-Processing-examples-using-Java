@@ -1,4 +1,4 @@
-package PrimesFinder.ChunksMethod;
+package ChunksMethod;
 
 import java.util.List;
 

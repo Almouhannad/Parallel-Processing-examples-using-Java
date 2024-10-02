@@ -1,4 +1,4 @@
-package PrimesFinder.SieveOfEratosthenes;
+package SieveOfEratosthenes;
 
 public class SieveOfEratosthenesRunnable implements Runnable {
 

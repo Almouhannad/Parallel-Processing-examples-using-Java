@@ -1,6 +1,6 @@
-package PrimesFinder.SieveOfEratosthenes;
+package SieveOfEratosthenes;
 
-import PrimesFinder.Abstractions.IPrimesFinder;
+import Abstractions.IPrimesFinder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class SieveOfEratosthenes implements IPrimesFinder {
     private final List<Integer> primes;
 
     /**
-     * @param n find primes in [2,n]
+     * @param n            find primes in [2,n]
      * @param threadsCount threads to use
      */
     public SieveOfEratosthenes(int n, int threadsCount) {

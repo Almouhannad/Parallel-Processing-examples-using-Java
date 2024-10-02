@@ -1,6 +1,6 @@
-package PrimesFinder.ChunksMethod;
+package ChunksMethod;
 
-import PrimesFinder.Abstractions.IPrimesFinder;
+import Abstractions.IPrimesFinder;
 
 import java.util.ArrayList;
 import java.util.List;
