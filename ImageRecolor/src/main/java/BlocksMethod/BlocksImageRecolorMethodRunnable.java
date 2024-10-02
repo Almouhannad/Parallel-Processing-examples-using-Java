@@ -2,47 +2,34 @@ package BlocksMethod;
 
 import Helpers.ImageProcessingHelper;
 
-public class BlocksImageRecolorMethodRunnable implements Runnable {
+import java.awt.image.BufferedImage;
 
-    private BlocksImageRecolorMethod parentProcess;
+class BlocksImageRecolorMethodRunnable implements Runnable {
 
-    private int xStart;
-    private int xEnd;
+    private final BufferedImage originalImage;
+    private final BufferedImage resultImage;
 
-    private int yStart;
-    private int yEnd;
+    private final int xStart;
+    private final int yStart;
 
+    private final int xEnd;
+    private final int yEnd;
 
-    /**
-     * @param parentProcess Parent process that created this runnable
-     * @param xStart        the starting x-coordinate of the block to be recolored
-     * @param xEnd          the ending x-coordinate of the block to be recolored
-     * @param yStart        the starting y-coordinate of the block to be recolored
-     * @param yEnd          the ending y-coordinate of the block to be recolored
-     */
-    public BlocksImageRecolorMethodRunnable(BlocksImageRecolorMethod parentProcess, int xStart, int xEnd, int yStart, int yEnd) {
-        this.parentProcess = parentProcess;
+    public BlocksImageRecolorMethodRunnable(BufferedImage originalImage, BufferedImage resultImage, int xStart, int yStart, int xEnd, int yEnd) {
+        this.originalImage = originalImage;
+        this.resultImage = resultImage;
+
         this.xStart = xStart;
-        this.xEnd = xEnd;
         this.yStart = yStart;
+
+        this.xEnd = xEnd;
         this.yEnd = yEnd;
     }
 
     @Override
     public void run() {
-//        System.out.println("Thread: " + index + " started");
-        recolor();
-//        System.out.println("Thread: " + index + " finished");
-    }
-
-    /**
-     * Recolors the block of the image from(xStart, yStart) to (xEnd, yEnd)
-     */
-    private void recolor() {
-        for (int x = xStart; x < xEnd && x < parentProcess.originalImage.getWidth(); x++) {
-            for (int y = yStart; y < yEnd && y < parentProcess.originalImage.getHeight(); y++) {
-                ImageProcessingHelper.recolorPixel(parentProcess.originalImage, parentProcess.resultImage, x, y);
-            }
-        }
+        ImageProcessingHelper.recolorSection(originalImage, resultImage,
+                xStart, yStart,
+                xEnd, yEnd);
     }
 }

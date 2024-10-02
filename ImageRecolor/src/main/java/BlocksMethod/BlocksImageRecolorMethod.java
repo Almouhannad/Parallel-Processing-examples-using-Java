@@ -1,62 +1,46 @@
 package BlocksMethod;
 
-import Abstractions.IImageRecolorMethod;
-import Helpers.OpenImageHelper;
-import Helpers.SaveImageHelper;
+import Abstractions.ImageRecolorMethod;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlocksImageRecolorMethod implements IImageRecolorMethod {
+public class BlocksImageRecolorMethod extends ImageRecolorMethod {
 
-    private int threadsCount;
 
     /**
-     * @param threadsCount the number of threads to use for recoloring the image
+     * @param threadsCount number of threads to use
      */
     public BlocksImageRecolorMethod(int threadsCount) {
-        this.threadsCount = threadsCount;
+        super(threadsCount);
     }
-
-    public BufferedImage originalImage;
-    public BufferedImage resultImage;
-
-    public int width;
-    public int height;
 
     @Override
     public void recolorImage() {
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
 
-        try {
-            // Open the original image
-            originalImage = OpenImageHelper.openImage();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        width = originalImage.getWidth();
-        height = originalImage.getHeight();
-
-        // Number of threads is at most size
+        // Block size for each thread
         int blockSize = (int) Math.sqrt(width * height / threadsCount);
         int blockCountX = (int) Math.ceil((double) width / blockSize);
         int blockCountY = (int) Math.ceil((double) height / blockSize);
+        // Number of threads is at most size
         threadsCount = blockCountX * blockCountY;
 
-        resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-
-        List<Thread> threads = new ArrayList<>();
-
         // Create and start the threads
+        List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < blockCountY; i++) {
             for (int j = 0; j < blockCountX; j++) {
+
                 int xStart = j * blockSize;
-                int xEnd = (j == blockCountX - 1) ? width : xStart + blockSize;
                 int yStart = i * blockSize;
+
+                int xEnd = (j == blockCountX - 1) ? width : xStart + blockSize;
                 int yEnd = (i == blockCountY - 1) ? height : yStart + blockSize;
-                BlocksImageRecolorMethodRunnable task = new BlocksImageRecolorMethodRunnable(
-                        this, xStart, xEnd, yStart, yEnd);
+
+                BlocksImageRecolorMethodRunnable task = new BlocksImageRecolorMethodRunnable(originalImage, resultImage,
+                        xStart, yStart,
+                        xEnd, yEnd);
                 Thread thread = new Thread(task);
                 threads.add(thread);
                 thread.start();
@@ -69,13 +53,6 @@ public class BlocksImageRecolorMethod implements IImageRecolorMethod {
                 thread.join();
             } catch (InterruptedException e) {
             }
-        }
-
-        // Save result image
-        try {
-            SaveImageHelper.saveImage(resultImage);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

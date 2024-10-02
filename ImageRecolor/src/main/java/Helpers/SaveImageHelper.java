@@ -8,9 +8,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class SaveImageHelper {
-    public static void saveImage(BufferedImage resultImage) throws IOException {
+    public static void saveImage(BufferedImage resultImage) {
         String destinationFile = FilesLocations.DESTINATION_FILE;
         File outputFile = new File(destinationFile);
-        ImageIO.write(resultImage, "jpg", outputFile);
+        try {
+            ImageIO.write(resultImage, "jpg", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

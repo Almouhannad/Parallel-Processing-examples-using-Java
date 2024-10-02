@@ -7,7 +7,8 @@ import java.awt.image.BufferedImage;
 
 public class ImageProcessingHelper {
 
-    public static void recolorPixel(BufferedImage originalImage, BufferedImage resultImage, int x, int y) {
+    public static void recolorPixel(BufferedImage originalImage, BufferedImage resultImage,
+                                    int x, int y) {
         int rgb = originalImage.getRGB(x, y);
 
         int red = getRed(rgb);
@@ -29,6 +30,20 @@ public class ImageProcessingHelper {
         }
         int newRGB = createRGBFromColors(newRed, newGreen, newBlue);
         setRGB(resultImage, x, y, newRGB);
+    }
+
+    /**
+     * Recolors a section of the image from(xStart, yStart) to (xEnd, yEnd)
+     */
+    public static void recolorSection(BufferedImage originalImage, BufferedImage resultImage,
+                                      int xStart, int yStart,
+                                      int xEnd, int yEnd) {
+        for (int x = xStart; x < xEnd && x < originalImage.getWidth(); x++) {
+            for (int y = yStart; y < yEnd && y < originalImage.getHeight(); y++) {
+                recolorPixel(originalImage, resultImage, x, y);
+            }
+        }
+
     }
 
     public static void setRGB(BufferedImage image, int x, int y, int rgb) {
@@ -66,6 +81,9 @@ public class ImageProcessingHelper {
         return rgb & 0x000000FF;
     }
 
+    /**
+     * Check if two images are equal
+     */
     public static boolean areImagesEqual(BufferedImage img1, BufferedImage img2) {
         if (img1.getWidth() != img2.getWidth() || img1.getHeight() != img2.getHeight()) {
             return false;

@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class OpenImageHelper {
-    public static BufferedImage openImage() throws IOException {
-        return ImageIO.read(new File(FilesLocations.SOURCE_FILE));
+    public static BufferedImage openImage() {
+        try {
+            return ImageIO.read(new File(FilesLocations.SOURCE_FILE));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
