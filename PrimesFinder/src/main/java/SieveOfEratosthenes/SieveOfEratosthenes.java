@@ -1,24 +1,19 @@
 package SieveOfEratosthenes;
 
-import Abstractions.IPrimesFinder;
+import Abstractions.PrimesFinder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SieveOfEratosthenes implements IPrimesFinder {
+public class SieveOfEratosthenes extends PrimesFinder {
 
-    private final int n;
-    private final int threadsCount;
-    private final List<Integer> primes;
 
     /**
      * @param n            find primes in [2,n]
      * @param threadsCount threads to use
      */
     public SieveOfEratosthenes(int n, int threadsCount) {
-        this.n = n;
-        this.threadsCount = threadsCount;
-        primes = new ArrayList<>();
+        super(n, threadsCount);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package TestSieveOfEratosthenes;
 
-import Abstractions.IPrimesFinder;
+import Abstractions.PrimesFinder;
 import SieveOfEratosthenes.SieveOfEratosthenes;
 
 import TestConstants.TestConstants;
@@ -17,7 +17,7 @@ public class TestSieveOfEratosthenes extends TestCase {
         int[] nValues = TestConstants.outputTestNs;
 
         for (int i = 0; i < nValues.length; i++) {
-            IPrimesFinder finder = new SieveOfEratosthenes(nValues[i], threads);
+            PrimesFinder finder = new SieveOfEratosthenes(nValues[i], threads);
             int primeCount = finder.getPrimesCount();
             assertEquals(expectedPrimeCounts[i], primeCount);
         }
@@ -30,7 +30,7 @@ public class TestSieveOfEratosthenes extends TestCase {
                 System.out.println("  Threads: " + threads);
                 long totalTime = 0;
                 for (int i = 0; i < numberOfTries; i++) {
-                    IPrimesFinder finder = new SieveOfEratosthenes(n, threads);
+                    PrimesFinder finder = new SieveOfEratosthenes(n, threads);
                     long start = System.currentTimeMillis();
                     finder.getPrimesCount();
                     long end = System.currentTimeMillis();

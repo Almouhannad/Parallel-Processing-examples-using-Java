@@ -1,6 +1,6 @@
 package TestChunksMethod;
 
-import Abstractions.IPrimesFinder;
+import Abstractions.PrimesFinder;
 import ChunksMethod.ChunksMethod;
 import TestConstants.TestConstants;
 import junit.framework.TestCase;
@@ -16,7 +16,7 @@ public class TestChunksMethod extends TestCase {
         int[] nValues = TestConstants.outputTestNs;
 
         for (int i = 0; i < nValues.length; i++) {
-            IPrimesFinder finder = new ChunksMethod(nValues[i], threads);
+            PrimesFinder finder = new ChunksMethod(nValues[i], threads);
             int primeCount = finder.getPrimesCount();
             assertEquals(expectedPrimeCounts[i], primeCount);
         }
@@ -29,7 +29,7 @@ public class TestChunksMethod extends TestCase {
                 System.out.println("  Threads: " + threads);
                 long totalTime = 0;
                 for (int i = 0; i < numberOfTries; i++) {
-                    IPrimesFinder finder = new ChunksMethod(n, threads);
+                    PrimesFinder finder = new ChunksMethod(n, threads);
                     long start = System.currentTimeMillis();
                     finder.getPrimesCount();
                     long end = System.currentTimeMillis();
@@ -80,7 +80,7 @@ public class TestChunksMethod extends TestCase {
                 System.out.println("  Threads: " + threads);
                 long totalTime = 0;
                 for (int i = 0; i < numRuns; i++) {
-                    IPrimesFinder finder = new ChunksMethod(n, threads);
+                    PrimesFinder finder = new ChunksMethod(n, threads);
                     long start = System.currentTimeMillis();
                     finder.getPrimesCount();
                     long end = System.currentTimeMillis();

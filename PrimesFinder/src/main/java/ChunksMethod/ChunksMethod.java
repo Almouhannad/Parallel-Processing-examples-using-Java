@@ -1,24 +1,19 @@
 package ChunksMethod;
 
-import Abstractions.IPrimesFinder;
+import Abstractions.PrimesFinder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChunksMethod implements IPrimesFinder {
+public class ChunksMethod extends PrimesFinder {
 
-    private final int n;
-    private final int threadsCount;
-    private final List<Integer> primes;
 
     /**
      * @param n            find primes in [2,n]
      * @param threadsCount threads to use
      */
     public ChunksMethod(int n, int threadsCount) {
-        this.n = n;
-        this.threadsCount = threadsCount;
-        this.primes = new ArrayList<>();
+        super(n, threadsCount);
     }
 
     @Override
