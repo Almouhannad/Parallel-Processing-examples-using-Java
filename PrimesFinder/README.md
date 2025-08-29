@@ -20,8 +20,8 @@ To get this project up and running locally, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/PrimesFinder.git
-    cd PrimesFinder
+    git clone https://github.com/Almouhannad/Parallel-Processing-examples-using-Java.git
+    cd Parallel-Processing-examples-using-Java/PrimesFinder
     ```
 2.  **Build the project using Maven:**
     ```bash
